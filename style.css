@@ -490,15 +490,7 @@ body {
   }
 }
 
-.now-playing {
-  margin-bottom: 20px;
-  font-size: 16px;
-  color: #ffa500;
-  text-align: center;
-  font-weight: 600;
-  text-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
-  animation: slideInText 0.6s ease-out;
-}
+/* .now-playing is defined in the layout section below */
 
 @keyframes slideInText {
   from {
@@ -553,12 +545,139 @@ body {
   }
 }
 
-.buttons {
+/* ── Seek Row ──────────────────────────────────── */
+.seek-row {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 10px;
 }
+
+.seek-row span {
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+  min-width: 38px;
+  white-space: nowrap;
+}
+
+.seek-row #totalDuration {
+  text-align: right;
+}
+
+.seek-row .seek-slider {
+  flex: 1;
+}
+
+/* ── Track Info Row ─────────────────────────────── */
+.track-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.now-playing {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  animation: slideInText 0.6s ease-out;
+}
+
+.track-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Controls Row ──────────────────────────────── */
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Small circular icon buttons */
+.icon-btn {
+  background: rgba(255, 165, 0, 0.08);
+  border: 1.5px solid rgba(255, 165, 0, 0.35);
+  color: #ffa500;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background: #ffa500;
+  color: #000;
+  border-color: #ffa500;
+  transform: scale(1.12);
+  box-shadow: 0 4px 14px rgba(255, 165, 0, 0.45);
+}
+
+.icon-btn.active {
+  background: linear-gradient(135deg, #ffa500, #ffb700);
+  color: #000;
+  border-color: #ffb700;
+}
+
+/* Big play/pause button */
+.play-btn-large {
+  background: linear-gradient(135deg, #ffa500, #ffb700);
+  border: none;
+  color: #000;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.play-btn-large::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,165,0,0.5) 0%, rgba(255,165,0,0) 70%);
+  animation: playPulse 1.5s ease-in-out infinite;
+  z-index: 0;
+}
+
+.play-btn-large i {
+  position: relative;
+  z-index: 1;
+}
+
+.play-btn-large:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.6);
+}
+
 
 button {
   padding: 12px 24px;
@@ -642,19 +761,119 @@ button:hover {
   font-weight: 700;
 }
 
-#repeatBtn.all,
-#repeatBtn.one {
-  background: linear-gradient(135deg, #ffa500, #ffb700);
-  color: #000;
-  font-weight: 700;
-}
 
 .slider_container {
   margin: 20px 0;
 }
 
-.seek-slider,
+/* ── Volume Widget ─────────────────────────────── */
+.volume-widget {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.volume-btn {
+  background: rgba(255, 165, 0, 0.1);
+  border: 2px solid #ffa500;
+  color: #ffa500;
+  font-size: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.volume-btn:hover {
+  background: #ffa500;
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.45);
+}
+
+.volume-popup {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: linear-gradient(180deg, #1e1e2e, #2d2d44);
+  border: 1px solid rgba(255, 165, 0, 0.4);
+  border-radius: 14px;
+  padding: 16px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 52px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 165, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 50;
+}
+
+.volume-popup.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Vertical slider */
 .volume-slider {
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 6px;
+  height: 110px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(180deg, #ffa500 0%, #333 100%);
+  border-radius: 3px;
+  border: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffa500, #ffb700);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 14px rgba(255, 165, 0, 0.9);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffa500, #ffb700);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.6);
+}
+
+.volume-label {
+  font-size: 11px;
+  color: #ffa500;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+
+.seek-slider {
   width: 100%;
   height: 6px;
   appearance: none;
@@ -663,8 +882,7 @@ button:hover {
   outline: none;
 }
 
-.seek-slider::-webkit-slider-thumb,
-.volume-slider::-webkit-slider-thumb {
+.seek-slider::-webkit-slider-thumb {
   appearance: none;
   width: 16px;
   height: 16px;
@@ -676,8 +894,7 @@ button:hover {
   position: relative;
 }
 
-.seek-slider::-webkit-slider-thumb:active,
-.volume-slider::-webkit-slider-thumb:active {
+.seek-slider::-webkit-slider-thumb:active {
   animation: thumbPulse 0.4s ease-out;
 }
 
@@ -695,14 +912,12 @@ button:hover {
   }
 }
 
-.seek-slider::-webkit-slider-thumb:hover,
-.volume-slider::-webkit-slider-thumb:hover {
+.seek-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 2px 12px rgba(255, 165, 0, 0.8);
 }
 
-.seek-slider::-moz-range-thumb,
-.volume-slider::-moz-range-thumb {
+.seek-slider::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -713,8 +928,7 @@ button:hover {
   transition: all 0.2s ease;
 }
 
-.seek-slider::-moz-range-thumb:hover,
-.volume-slider::-moz-range-thumb:hover {
+.seek-slider::-moz-range-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 2px 12px rgba(255, 165, 0, 0.8);
 }
